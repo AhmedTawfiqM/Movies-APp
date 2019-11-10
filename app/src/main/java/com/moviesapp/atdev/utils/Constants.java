@@ -16,4 +16,5 @@ public class Constants {
 
     //Pages
     public static final int FIRST_PAGE = 1;
+    public static final int PAGE_SIZE = 20;
 }

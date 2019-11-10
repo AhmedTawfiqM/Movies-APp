@@ -10,13 +10,23 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.paging.PagedList;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.moviesapp.atdev.R;
 import com.moviesapp.atdev.databinding.FragmentMainMoviesBinding;
+import com.moviesapp.atdev.pojo.adapters.AdapterMovies;
+import com.moviesapp.atdev.pojo.models.Movie;
 import com.moviesapp.atdev.pojo.models.MovieResponse;
 import com.moviesapp.atdev.pojo.network.APIClient;
 import com.moviesapp.atdev.pojo.network.component.DaggerNetworkComp;
 import com.moviesapp.atdev.pojo.network.component.NetworkComp;
+import com.moviesapp.atdev.utils.Constants;
+import com.moviesapp.atdev.utils.Helper;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,7 +38,9 @@ public class FragmentMovies extends Fragment {
 
     //Vars
     private FragmentMainMoviesBinding binding;
-    private NetworkComp daggernetworkcomp;
+    private RecyclerView recyclerView;
+    private MoviesViewModel viewModel;
+    private AdapterMovies adapterMovies;
 
     @Nullable
     @Override
@@ -44,24 +56,29 @@ public class FragmentMovies extends Fragment {
 
         InitUI();
 
-        APIClient apiClient = daggernetworkcomp.getApiClient();
-        apiClient.getMovies("now_playing", 1).enqueue(new Callback<MovieResponse>() {
+        viewModel.getMovies(Constants.now_playing).observe(this, new Observer<PagedList<Movie>>() {
             @Override
-            public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
+            public void onChanged(PagedList<Movie> movies) {
 
-                Log.d("testa", "onResponse: " + response.body().getMovies());
-            }
-
-            @Override
-            public void onFailure(Call<MovieResponse> call, Throwable t) {
-
+                if (movies != null) {
+                    adapterMovies.submitList(movies);
+                }
             }
         });
+        recyclerView.setAdapter(adapterMovies);
 
     }
 
     private void InitUI() {
 
-        daggernetworkcomp = DaggerNetworkComp.create();
+        viewModel = ViewModelProviders.of(getActivity()).get(MoviesViewModel.class);
+        //
+        adapterMovies = new AdapterMovies(getActivity());
+
+        //  Initila
+        recyclerView = binding.recyclerviewMovies;
+        int spanCount = Helper.getScreenOrientation(getActivity());
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), spanCount));
     }
+
 }
