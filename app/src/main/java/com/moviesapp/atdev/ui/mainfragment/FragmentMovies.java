@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
@@ -25,6 +26,7 @@ import com.moviesapp.atdev.pojo.models.MovieResponse;
 import com.moviesapp.atdev.pojo.network.APIClient;
 import com.moviesapp.atdev.pojo.network.component.DaggerNetworkComp;
 import com.moviesapp.atdev.pojo.network.component.NetworkComp;
+import com.moviesapp.atdev.utils.ClickListener;
 import com.moviesapp.atdev.utils.Constants;
 import com.moviesapp.atdev.utils.Helper;
 
@@ -41,6 +43,13 @@ public class FragmentMovies extends Fragment {
     private RecyclerView recyclerView;
     private MoviesViewModel viewModel;
     private AdapterMovies adapterMovies;
+    private FragmentActivity activity;
+    //
+
+    //
+    private Bundle bundle;
+    String category;
+    //
 
     @Nullable
     @Override
@@ -54,23 +63,68 @@ public class FragmentMovies extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //
         InitUI();
 
-        viewModel.getMovies(Constants.now_playing).observe(this, new Observer<PagedList<Movie>>() {
-            @Override
-            public void onChanged(PagedList<Movie> movies) {
+        //
+        initBundles();
 
-                if (movies != null) {
-                    adapterMovies.submitList(movies);
-                }
+        //
+        initViewModelandAdapter();
+
+        //
+        OnMovieClickListener();
+    }
+
+    private void OnMovieClickListener() {
+
+        adapterMovies.setOnItemClickListner(new ClickListener() {
+            @Override
+            public void OnItemClick(int position, View view) {
+
+                //Open Movie Activity Details
+
             }
         });
-        recyclerView.setAdapter(adapterMovies);
+
+    }
+
+    private void initViewModelandAdapter() {
+
+        if (Helper.isNetworkAvailable(activity)) {
+            viewModel.getMovies(category).observe(this, new Observer<PagedList<Movie>>() {
+                @Override
+                public void onChanged(PagedList<Movie> movies) {
+
+                    if (movies != null) {
+                        adapterMovies.submitList(movies);
+                    }
+                }
+            });
+
+            //set Adadpter
+            recyclerView.setAdapter(adapterMovies);
+
+        } else {
+
+            Helper.showSnackBarNoInternet(activity);
+        }
+
+    }
+
+    private void initBundles() {
+
+        bundle = getArguments();
+        if (bundle != null) {
+            category = bundle.getString(Constants.Type_Category);
+            Log.d(TAG, "Bundles : " + category);
+        }
 
     }
 
     private void InitUI() {
 
+        activity = getActivity();
         viewModel = ViewModelProviders.of(this).get(MoviesViewModel.class);
         //
         adapterMovies = new AdapterMovies(getActivity());

@@ -50,7 +50,8 @@ dependencies {
 
     //Paging Pagination
     def paging_version = "2.1.0"
-    implementation "androidx.paging:paging-runtime:$paging_version" // For Kotlin use paging-runtime-ktx
+    implementation "androidx.paging:paging-runtime:$paging_version"
+    // For Kotlin use paging-runtime-ktx
 
     // ViewModel and LiveData
     def lifecycle_version = "2.1.0"

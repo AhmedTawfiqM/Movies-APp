@@ -1,12 +1,17 @@
 package com.moviesapp.atdev.utils;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.res.Configuration;
+import android.net.ConnectivityManager;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.databinding.BindingAdapter;
 import androidx.fragment.app.FragmentActivity;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.snackbar.Snackbar;
 import com.moviesapp.atdev.R;
 
 public class Helper {
@@ -38,5 +43,22 @@ public class Helper {
                 .placeholder(R.drawable.placeholder)
                 .into(view);
 
+    }
+
+
+
+    public static void showSnackBarNoInternet(Activity activity){
+        Snackbar.make(activity.findViewById(android.R.id.content),
+                "You currently have limited or no connectivity. Try connecting to a Wi-Fi network.", Snackbar.LENGTH_LONG).show();
+    }
+
+    public static void showToast(Context context, String toastMessage){
+        Toast.makeText(context, ""+toastMessage, Toast.LENGTH_SHORT).show();
+    }
+
+
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
+        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
     }
 }

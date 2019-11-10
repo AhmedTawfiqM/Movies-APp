@@ -13,6 +13,9 @@ public class Constants {
     public static final String top_rated = "top_rated";
     public static final String popular = "popular";
     public static final String upcoming = "upcoming";
+    //
+    public static final String Type_Category = "Type_Category";
+    //
 
     //Pages
     public static final int FIRST_PAGE = 1;
