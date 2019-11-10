@@ -36,7 +36,7 @@ public class MovieDataSource extends PageKeyedDataSource<Integer, Movie> {
                     public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
 
                         if (response.body() != null) {
-                            callback.onResult(response.body().getMovies(), null, Constants.FIRST_PAGE);
+                            callback.onResult(response.body().getMovies(), null, Constants.FIRST_PAGE + 1);
                         }
                     }
 
@@ -50,7 +50,27 @@ public class MovieDataSource extends PageKeyedDataSource<Integer, Movie> {
 
     // Before Page  // Previous Page
     @Override
-    public void loadBefore(@NonNull LoadParams<Integer> params, @NonNull LoadCallback<Integer, Movie> callback) {
+    public void loadBefore(@NonNull final LoadParams<Integer> params, @NonNull final LoadCallback<Integer, Movie> callback) {
+
+
+        apiClient.getMovies(categery, params.key)
+                .enqueue(new Callback<MovieResponse>() {
+                    @Override
+                    public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
+
+
+                        if (response.body() != null) {
+                            Integer key = (params.key > 1) ? params.key - 1 : null;
+                            callback.onResult(response.body().getMovies(), key);
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<MovieResponse> call, Throwable t) {
+                        Log.d("CallF", "onFailure: loadAfter " + t.getMessage());
+                    }
+                });
 
     }
 
