@@ -71,7 +71,7 @@ public class FragmentMovies extends Fragment {
 
     private void InitUI() {
 
-        viewModel = ViewModelProviders.of(getActivity()).get(MoviesViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(MoviesViewModel.class);
         //
         adapterMovies = new AdapterMovies(getActivity());
 

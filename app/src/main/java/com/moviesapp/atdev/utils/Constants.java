@@ -17,4 +17,7 @@ public class Constants {
     //Pages
     public static final int FIRST_PAGE = 1;
     public static final int PAGE_SIZE = 20;
+
+    //
+    public static final String IMAGE_POSTER_PATH = "https://image.tmdb.org/t/p/w300";
 }

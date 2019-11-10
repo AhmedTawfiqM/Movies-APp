@@ -4,6 +4,8 @@
 
     <data class="MovieItemBinding">
 
+        <import type="com.moviesapp.atdev.utils.Helper" />
+
         <variable
             name="Movie"
             type="com.moviesapp.atdev.pojo.models.Movie" />
@@ -26,7 +28,8 @@
                 android:id="@+id/imageMovie"
                 android:layout_width="190dp"
                 android:layout_height="210dp"
-                android:scaleType="fitXY" />
+                android:scaleType="fitXY"
+                app:loadImage="@{Helper.getPostUrl(Movie.posterPath)}" />
 
             <TextView
                 android:id="@+id/txv_MovieTitle"
@@ -37,7 +40,7 @@
                 android:gravity="center"
                 android:lines="3"
                 android:maxLines="3"
-                android:text="@{movie.getTitle}" />
+                android:text="@{Movie.title}" />
 
         </RelativeLayout>
 
