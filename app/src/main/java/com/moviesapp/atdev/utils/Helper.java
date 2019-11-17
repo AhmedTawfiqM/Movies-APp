@@ -61,4 +61,24 @@ public class Helper {
         ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
         return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
     }
+
+
+    public static String convertVoteCountToString(Integer voteCount){
+        return voteCount != null ? ("(" + voteCount + ")") : "";
+    }
+
+    public static String convertVoteAverageToString(Double voteAverage){
+        return voteAverage != null ? ("(" + voteAverage + ")") : "";
+    }
+
+    public static float convertVoteAverageToFloat(Double rating){
+        return rating != null ? (rating.floatValue() / 2) : 0;
+    }
+
+    public static String getReleasedYear(String releaseDate){
+        String[] parts = releaseDate.split("-");
+        //or String[] parts = releaseDate.substring(0, 4);
+        return parts[0];
+    }
+
 }

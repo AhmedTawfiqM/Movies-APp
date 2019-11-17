@@ -4,7 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="com.moviesapp.atdev.utils.Helper"/>
 
+        <variable
+            name="crewDirector"
+            type="String" />
+
+        <variable
+            name="crewWriters"
+            type="String" />
+
+        <variable
+            name="movieDetails"
+            type="com.moviesapp.atdev.pojo.models.DetailsResponse" />
     </data>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

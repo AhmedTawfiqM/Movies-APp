@@ -28,12 +28,12 @@ public class RepoDetailsMovie {
     private NetworkComp networkComp = DaggerNetworkComp.create();
 
 
-    static RepoDetailsMovie getInstance(Integer MmovieId) {
+    public static RepoDetailsMovie getInstance(Integer MmovieId) {
         movieId = MmovieId;
         return new RepoDetailsMovie();
     }
 
-    MutableLiveData<CreditResponse> getMovieCredit() {
+    public MutableLiveData<CreditResponse> getMovieCredit() {
 
         networkComp.getApiClient()
                 .getMovieCreditsResponse(movieId)
@@ -55,7 +55,7 @@ public class RepoDetailsMovie {
         return movieCredit;
     }
 
-    MutableLiveData<DetailsResponse> getMovieDetails() {
+    public MutableLiveData<DetailsResponse> getMovieDetails() {
 
         networkComp.getApiClient()
                 .getMovieDetails(movieId)
@@ -77,7 +77,7 @@ public class RepoDetailsMovie {
         return movieDetail;
     }
 
-    MutableLiveData<List<Movie>> getSimilarMovies() {
+    public MutableLiveData<List<Movie>> getSimilarMovies() {
 
         networkComp.getApiClient()
                 .getSimilarResponse(movieId)
@@ -97,7 +97,7 @@ public class RepoDetailsMovie {
         return similarMovies;
     }
 
-    MutableLiveData<List<Movie>> getRecommendedMovies() {
+    public MutableLiveData<List<Movie>> getRecommendedMovies() {
 
         networkComp.getApiClient()
                 .getRecommendationResponse(movieId)
@@ -118,7 +118,7 @@ public class RepoDetailsMovie {
         return recommendedMovies;
     }
 
-    MutableLiveData<List<Videos>> getMovieVideos() {
+    public MutableLiveData<List<Videos>> getMovieVideos() {
 
         networkComp.getApiClient()
                 .getMovieVideosResponse(movieId)

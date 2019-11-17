@@ -1,5 +1,6 @@
 package com.moviesapp.atdev.ui.mainfragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ import com.moviesapp.atdev.pojo.models.MovieResponse;
 import com.moviesapp.atdev.pojo.network.APIClient;
 import com.moviesapp.atdev.pojo.network.component.DaggerNetworkComp;
 import com.moviesapp.atdev.pojo.network.component.NetworkComp;
+import com.moviesapp.atdev.ui.moviedetails.DetailsMovieActivity;
 import com.moviesapp.atdev.utils.ClickListener;
 import com.moviesapp.atdev.utils.Constants;
 import com.moviesapp.atdev.utils.Helper;
@@ -83,7 +85,11 @@ public class FragmentMovies extends Fragment {
             public void OnItemClick(int position, View view) {
 
                 //Open Movie Activity Details
-
+                Intent intent = new Intent(activity, DetailsMovieActivity.class);
+                if (viewModel.getMovies(category).getValue() != null) {
+                    intent.putExtra("movieId", viewModel.getMovies(category).getValue().get(position).getId());
+                }
+                startActivity(intent);
             }
         });
 
