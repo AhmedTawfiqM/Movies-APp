@@ -80,17 +80,16 @@ public class FragmentMovies extends Fragment {
 
     private void OnMovieClickListener() {
 
-        adapterMovies.setOnItemClickListner(new ClickListener() {
-            @Override
-            public void OnItemClick(int position, View view) {
+        adapterMovies.setOnItemClickListner((position, view) -> {
 
-                //Open Movie Activity Details
-                Intent intent = new Intent(activity, DetailsMovieActivity.class);
-                if (viewModel.getMovies(category).getValue() != null) {
-                    intent.putExtra("movieId", viewModel.getMovies(category).getValue().get(position).getId());
-                }
-                startActivity(intent);
+            //Open Movie Activity Details
+            Intent intent = new Intent(activity, DetailsMovieActivity.class);
+            if (viewModel.getMovies(category).getValue() != null) {
+                intent.putExtra("movieId", viewModel.getMovies(category).getValue().get(position).getId());
+            } else {
+                Helper.showToast(getContext(), "Null Movie");
             }
+            startActivity(intent);
         });
 
     }

@@ -59,6 +59,13 @@ public class DetailsMovieActivity extends AppCompatActivity {
         detailsBinding = DataBindingUtil.setContentView(this, R.layout.activity_details_movie);
 
 
+        //
+        init();
+        getMovieIntent();
+        initViewModel();
+        getDetails(savedInstanceState);
+        detailsBinding.detailSwipeRefresh.setOnRefreshListener(() -> getDetails(null));
+
     }
 
     //get clicked movie id
@@ -95,12 +102,14 @@ public class DetailsMovieActivity extends AppCompatActivity {
         castRecyclerView.setAdapter(castAdapter);
 
         //similar movies recyclerView
-        similarMoviesRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        similarMoviesRecyclerView.setLayoutManager(new LinearLayoutManager(this,
+                LinearLayoutManager.HORIZONTAL, false));
         similarAdapter = new SimilarMovieAdapter(this);
         similarMoviesRecyclerView.setAdapter(similarAdapter);
 
         //recommended recyclerView
-        recommendedMoviesRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        recommendedMoviesRecyclerView.setLayoutManager(new LinearLayoutManager(this,
+                LinearLayoutManager.HORIZONTAL, false));
         recommendedAdapter = new RecommendedMovieAdapter(this);
         recommendedMoviesRecyclerView.setAdapter(recommendedAdapter);
 
