@@ -10,9 +10,7 @@ public class MoviesDataSourceFactory extends DataSource.Factory {
     String category;
 
     public MoviesDataSourceFactory(String category) {
-
         this.category = category;
-
     }
 
     @NonNull

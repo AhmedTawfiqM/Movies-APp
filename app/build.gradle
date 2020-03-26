@@ -45,20 +45,20 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.2.13'
 
     //Dagger
-    api 'com.google.dagger:dagger:2.16'
+    api 'com.google.dagger:dagger:2.24'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.16'
 
     //InterCeptor and Timber
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.4.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.0.0'
     implementation 'com.jakewharton.timber:timber:4.3.1'
 
     //Paging Pagination
-    def paging_version = "2.1.0"
+    def paging_version = "2.1.2"
     implementation "androidx.paging:paging-runtime:$paging_version"
     // For Kotlin use paging-runtime-ktx
 
     // ViewModel and LiveData
-    def lifecycle_version = "2.1.0"
+    def lifecycle_version = "2.2.0"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
 
     //Glide
